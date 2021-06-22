@@ -88,8 +88,9 @@ fn main() -> ! {
     let mut buf = [0; 128];
 
     loop {
+        let config = RxConfig::default();
         let mut receiving = dw1000
-            .receive(RxConfig::default())
+            .receive(config)
             .expect("Failed to receive message");
 
         timeout_timer.start(500_000u32);
@@ -172,7 +173,7 @@ fn main() -> ! {
             };
 
             // Ranging response received. Compute distance.
-            let distance_mm = ranging::compute_distance_mm(&response).unwrap();
+            let distance_mm = ranging::compute_distance_mm(&response, config).unwrap();
 
             dwm1001.leds.D9.enable();
             delay.delay_ms(10u32);

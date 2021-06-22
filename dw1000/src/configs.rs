@@ -320,6 +320,13 @@ impl Default for UwbChannel {
 }
 
 impl UwbChannel {
+    /// Is this a narrow channel?
+    pub fn is_narrow(&self) -> bool {
+        match self {
+            UwbChannel::Channel4 | UwbChannel::Channel7 => false,
+            UwbChannel::Channel1 | UwbChannel::Channel2 | UwbChannel::Channel3 | UwbChannel::Channel5 => true,
+        }
+    }
     /// Gets the recommended preamble code
     pub fn get_recommended_preamble_code(&self, prf_value: PulseRepetitionFrequency) -> u8 {
         // Many have overlapping possibilities, so the numbers have been chosen so that there's no overlap here
